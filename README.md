@@ -1,6 +1,6 @@
 # neofetch
 
-I made this because I got a laptop from my school which runs macOS but my IT admin has blocked me from using the brew command. I wanted to install neofetch but since I couldn't use brew I decided to write neofetch my self in Python as fun project because I thought it would be a nice project and I wanted neofetch on my laptop.
+I made this because I got a laptop from my school which runs macOS but my IT admin has blocked me from using the brew command. I wanted to install neofetch but since I couldn't use brew I decided to write neofetch my self in Python as a fun project and because I thought it would be a nice project and I wanted neofetch on my laptop.
 
 ## Installation
 ```$ git clone https://github.com/sdushantha/neofetch.git```
