@@ -8,7 +8,7 @@ I made this because I got a laptop from my school which runs macOS but my IT adm
 ## Setup
 1. Make a bin directory under your home directory
 2. Add ```export PATH=$PATH":$HOME/bin"``` to the  ```.profile``` or  ```.bash_profile``` file
-3. Move the ```neofetch``` (**not** neofetch.py) file to the ```bin/``` directory that was just created
+3. Move the ```neofetch``` file to the ```bin/``` directory that was just created
 4. ```$ cd bin/```
 5. ```$ chmod +x neofetch```
 6. Now enjoy!
