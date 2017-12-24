@@ -57,6 +57,12 @@ def kernel():
 		for info in f:
 			return info.strip()[61:67]
 
+def battery_percentage():
+	os.system('pmset -g batt | grep -Eo "\d+%" > tmp.txt')
+
+	with open("tmp.txt", "r") as f:
+		for info in f:
+			return info.strip()
 
 def cpu_spec():
 	os.system("sysctl -n machdep.cpu.brand_string | grep Intel > tmp.txt")
@@ -77,7 +83,7 @@ TEMPLATE = """
 \033[93m XMMMMMMMMMMMMMMMMMMMMMMMX.\033[0m\033[93m       Resolution\033[0m: {size}
 \033[91m;MMMMMMMMMMMMMMMMMMMMMMMM:\033[0m\033[93m        CPU\033[0m: {cpu}
 \033[91m:MMMMMMMMMMMMMMMMMMMMMMMM:\033[0m\033[93m        Local IP\033[0m: {local_ip}
-\033[91m.MMMMMMMMMMMMMMMMMMMMMMMMX.\033[0m
+\033[91m.MMMMMMMMMMMMMMMMMMMMMMMMX.\033[0m\033[93m       Battery\033[0m: {battery_percentage}
 \033[91m kMMMMMMMMMMMMMMMMMMMMMMMMWd.\033[0m
 \033[95m .XMMMMMMMMMMMMMMMMMMMMMMMMMMk\033[0m
 \033[95m  .XMMMMMMMMMMMMMMMMMMMMMMMMK.\033[0m
@@ -96,6 +102,7 @@ print(TEMPLATE.format(hostname = host_name(),
 	uptime=uptime(),
 	size=screen_size(),
 	cpu=cpu_spec(),
-	local_ip=local_ip()))
+	local_ip=local_ip(),
+	battery_percentage=battery_percentage()))
 
 os.system("rm -rf tmp.txt")
