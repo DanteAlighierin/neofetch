@@ -11,3 +11,7 @@ Add ```export PATH=$PATH":$HOME/bin"``` to ```.bash_profile``` or ```.profile```
 
 
 Then ```source .bash_profile``` or ```source .profile```
+
+## Preview
+
+![screen shot 2017-12-28 at 15 31 19](https://user-images.githubusercontent.com/27065646/34413513-46ba780e-ebe4-11e7-93ec-f2b9602321b2.png)
