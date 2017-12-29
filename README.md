@@ -4,13 +4,13 @@ I made this because I got a laptop from my school which runs macOS but my IT adm
 
 ## Installation
 ```bash
-curl https://raw.githubusercontent.com/sdushantha/neofetch/master/neofetch > neofetch && mkdir -p ~/bin && mv neofetch ~/bin && chmod +x ~/bin/neofetch
+$ curl https://raw.githubusercontent.com/sdushantha/neofetch/master/neofetch > neofetch && mkdir -p ~/bin && mv neofetch ~/bin && chmod +x ~/bin/neofetch
 ```
 
 Add ```export PATH=$PATH":$HOME/bin"``` to ```.bash_profile``` or ```.profile```
 
 
-Then ```source .bash_profile``` or ```source .profile```
+Then ```$ source .bash_profile``` or ```$ source .profile```
 
 ## Preview
 
