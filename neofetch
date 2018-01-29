@@ -5,9 +5,13 @@ import os
 
 
 def local_ip():
-	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-	s.connect(("8.8.8.8", 80))
-	return s.getsockname()[0]
+	
+	try:
+		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		s.connect(("8.8.8.8", 80))
+		return s.getsockname()[0]
+	except:
+		return None
 
 
 def host_name():
@@ -15,33 +19,33 @@ def host_name():
 
 
 def os_version():
-	os.system("/usr/sbin/system_profiler SPSoftwareDataType | grep 'System Version' > tmp.txt")
+	os.system("/usr/sbin/system_profiler SPSoftwareDataType | grep 'System Version' > .tmp.txt")
 
-	with open("tmp.txt", "r") as f:
+	with open(".tmp.txt", "r") as f:
 		for info in f:
 			return info.strip()[16:30]
 
 
 def model():
-	os.system("/usr/sbin/system_profiler SPHardwareDataType | grep 'Model Identifier' > tmp.txt")
+	os.system("/usr/sbin/system_profiler SPHardwareDataType | grep 'Model Identifier' > .tmp.txt")
 
-	with open("tmp.txt", "r") as f:
+	with open(".tmp.txt", "r") as f:
 		for info in f:
 			return info.strip()[18:]
 
 
 def screen_size():
-	os.system("/usr/sbin/system_profiler SPDisplaysDataType |grep Resolution > tmp.txt")
+	os.system("/usr/sbin/system_profiler SPDisplaysDataType |grep Resolution > .tmp.txt")
 
-	with open("tmp.txt", "r") as f:
+	with open(".tmp.txt", "r") as f:
 		for info in f:
 			return info.strip()[12:]
 
 
 def uptime():
-	os.system("/usr/sbin/system_profiler SPSoftwareDataType | grep 'Time since boot:' > tmp.txt")
+	os.system("/usr/sbin/system_profiler SPSoftwareDataType | grep 'Time since boot:' > .tmp.txt")
 
-	with open("tmp.txt", "r") as f:
+	with open(".tmp.txt", "r") as f:
 		for info in f:
 			return info.strip()[17:]
 
@@ -51,26 +55,35 @@ def shell():
 
 
 def kernel():
-	os.system("uname -a > tmp.txt")
+	os.system("uname -a > .tmp.txt")
 
-	with open("tmp.txt", "r") as f:
+	with open(".tmp.txt", "r") as f:
 		for info in f:
 			return info.strip()[61:67]
 
 def battery_percentage():
-	os.system('pmset -g batt | grep -Eo "\d+%" > tmp.txt')
+	os.system('pmset -g batt | grep -Eo "\d+%" > .tmp.txt')
 
-	with open("tmp.txt", "r") as f:
+	with open(".tmp.txt", "r") as f:
 		for info in f:
 			return info.strip()
 
 def cpu_spec():
-	os.system("sysctl -n machdep.cpu.brand_string | grep Intel > tmp.txt")
+	os.system("sysctl -n machdep.cpu.brand_string | grep Intel > .tmp.txt")
 
-	with open("tmp.txt", "r") as f:
+	with open(".tmp.txt", "r") as f:
 		for info in f:
 			cpu = info.strip().replace("CPU", "")
 			return cpu.replace("  ", " ")
+
+
+def SSID():
+	os.system("/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | awk '/ SSID/ {print substr($0, index($0, $2))}' > .tmp.txt")
+
+	with open(".tmp.txt", "r") as f:
+		for info in f:
+			return info.strip()
+
 
 TEMPLATE = """
 \033[92m                    'c.           {hostname} \033[0m
@@ -84,7 +97,7 @@ TEMPLATE = """
 \033[91m;MMMMMMMMMMMMMMMMMMMMMMMM:\033[0m\033[93m        CPU\033[0m: {cpu}
 \033[91m:MMMMMMMMMMMMMMMMMMMMMMMM:\033[0m\033[93m        Local IP\033[0m: {local_ip}
 \033[91m.MMMMMMMMMMMMMMMMMMMMMMMMX.\033[0m\033[93m       Battery\033[0m: {battery_percentage}
-\033[91m kMMMMMMMMMMMMMMMMMMMMMMMMWd.\033[0m
+\033[91m kMMMMMMMMMMMMMMMMMMMMMMMMWd.\033[0m\033[93m     SSID\033[0m: {ssid}
 \033[95m .XMMMMMMMMMMMMMMMMMMMMMMMMMMk\033[0m
 \033[95m  .XMMMMMMMMMMMMMMMMMMMMMMMMK.\033[0m
 \033[94m    kMMMMMMMMMMMMMMMMMMMMMMd\033[0m
@@ -103,6 +116,7 @@ print(TEMPLATE.format(hostname = host_name(),
 	size=screen_size(),
 	cpu=cpu_spec(),
 	local_ip=local_ip(),
-	battery_percentage=battery_percentage()))
+	battery_percentage=battery_percentage(),
+	ssid=SSID()))
 
-os.system("rm -rf tmp.txt")
+os.system("rm -rf .tmp.txt")
