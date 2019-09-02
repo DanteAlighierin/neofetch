@@ -5,84 +5,115 @@ import os
 
 
 def local_ip():
-	
 	try:
-		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-		s.connect(("8.8.8.8", 80))
-		return s.getsockname()[0]
+		try:
+			s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+			s.connect(("8.8.8.8", 80))
+			return s.getsockname()[0]
+		except:
+			return None
 	except:
 		return None
 
 
 def host_name():
-	return socket.gethostname()
-
+	try:
+		return socket.gethostname()
+	except:
+		return None
 
 def os_version():
-	os.system("/usr/sbin/system_profiler SPSoftwareDataType | grep 'System Version' > .tmp.txt")
+	
+	try:
+		os.system("/usr/sbin/system_profiler SPSoftwareDataType | grep 'System Version' > .tmp.txt")
 
-	with open(".tmp.txt", "r") as f:
-		for info in f:
-			return info.strip()[16:30]
-
+		with open(".tmp.txt", "r") as f:
+			for info in f:
+				return info.strip()[16:30]
+	except:
+		return None
 
 def model():
-	os.system("/usr/sbin/system_profiler SPHardwareDataType | grep 'Model Identifier' > .tmp.txt")
+	try:
+		os.system("/usr/sbin/system_profiler SPHardwareDataType | grep 'Model Identifier' > .tmp.txt")
 
-	with open(".tmp.txt", "r") as f:
-		for info in f:
-			return info.strip()[18:]
-
+		with open(".tmp.txt", "r") as f:
+			for info in f:
+				return info.strip()[18:]
+	except:
+		return None
 
 def screen_size():
-	os.system("/usr/sbin/system_profiler SPDisplaysDataType |grep Resolution > .tmp.txt")
+	try:
+		os.system("/usr/sbin/system_profiler SPDisplaysDataType |grep Resolution > .tmp.txt")
 
-	with open(".tmp.txt", "r") as f:
-		for info in f:
-			return info.strip()[12:]
-
+		with open(".tmp.txt", "r") as f:
+			for info in f:
+				return info.strip()[12:]
+	except:
+		return None
 
 def uptime():
-	os.system("/usr/sbin/system_profiler SPSoftwareDataType | grep 'Time since boot:' > .tmp.txt")
+	try:
+		os.system("/usr/sbin/system_profiler SPSoftwareDataType | grep 'Time since boot:' > .tmp.txt")
 
-	with open(".tmp.txt", "r") as f:
-		for info in f:
-			return info.strip()[17:]
-
+		with open(".tmp.txt", "r") as f:
+			for info in f:
+				return info.strip()[17:]
+	except:
+		return None
 
 def shell():
-	return os.environ.get('SHELL', '')
-
+	try:
+		return os.environ.get('SHELL', '')
+	except:
+		return None
 
 def kernel():
-	os.system("uname -a > .tmp.txt")
+	try:
+		os.system("uname -a > .tmp.txt")
 
-	with open(".tmp.txt", "r") as f:
-		for info in f:
-			return info.strip()[61:67]
+		with open(".tmp.txt", "r") as f:
+			for info in f:
+				return info.strip()[61:67]
+	except:
+		return None
+
 
 def battery_percentage():
-	os.system('pmset -g batt | grep -Eo "\d+%" > .tmp.txt')
+	try:
+		os.system('pmset -g batt | grep -Eo "\d+%" > .tmp.txt')
 
-	with open(".tmp.txt", "r") as f:
-		for info in f:
-			return info.strip()
+		with open(".tmp.txt", "r") as f:
+			for info in f:
+				return info.strip()
+	except:
+		return None
 
 def cpu_spec():
-	os.system("sysctl -n machdep.cpu.brand_string | grep Intel > .tmp.txt")
+	try:
+		
+		os.getpid()
+	
+		with open(".tmp.txt", "r") as f:
+			for info in f:
+				cpu = info.strip().replace("CPU", "")
+				return cpu.replace("  ", " ")
 
-	with open(".tmp.txt", "r") as f:
-		for info in f:
-			cpu = info.strip().replace("CPU", "")
-			return cpu.replace("  ", " ")
+	except:
+		return None
 
 
 def SSID():
-	os.system("/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | awk '/ SSID/ {print substr($0, index($0, $2))}' > .tmp.txt")
+	try:
+		os.system("/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | awk '/ SSID/ {print substr($0, index($0, $2))}' > .tmp.txt")
 
-	with open(".tmp.txt", "r") as f:
-		for info in f:
-			return info.strip()
+		with open(".tmp.txt", "r") as f:
+			for info in f:
+				return info.strip()
+
+	except:
+		return None
 
 
 TEMPLATE = """
@@ -104,7 +135,7 @@ TEMPLATE = """
 \033[94m     ;KMMMMMMMWXXWMMMMMMMk.\033[0m
 \033[94m       .cooc,.    .,coo:.\033[0m
 
-                                  \033[30m███\033[0m\033[91m███\033[0m\033[92m███\033[0m\033[93m███\033[0m\033[94m███\033[0m\033[95m███\033[0m\033[96m███\033[0m\033[97m███\033[0m
+   
 """
 print(TEMPLATE.format(hostname = host_name(),
 	hostname_sep = "-" * len(host_name()),
