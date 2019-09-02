@@ -55,7 +55,7 @@ def screen_size():
 
 def uptime():
 	try:
-		os.system("/usr/sbin/system_profiler SPSoftwareDataType | grep 'Time since boot:' > .tmp.txt")
+		os.system("uptime | grep 'Time since boot:' > .tmp.txt")
 
 		with open(".tmp.txt", "r") as f:
 			for info in f:
@@ -72,7 +72,6 @@ def shell():
 def kernel():
 	try:
 		os.system("uname -a > .tmp.txt")
-
 		with open(".tmp.txt", "r") as f:
 			for info in f:
 				return info.strip()[61:67]
