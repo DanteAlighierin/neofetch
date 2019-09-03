@@ -85,9 +85,11 @@ def battery_percentage():
 	except:
 		return None
 
+def gpu_spec():
+	pass
 
-
-	
+def memory():
+	pass
 
 
 
@@ -112,8 +114,8 @@ ddddMMh  dMM   :hNMNMNhNMNMNh: `NMm                      Resolution: {size}
     NMm  dMM  .NMN/-+MMM+-/NMN` dMM                      CPU: {cpu}
     NMm  dMM  -MMm  `MMM   dMM. dMM                      Local IP: {local_ip}
     NMm  dMM  -MMm  `MMM   dMM. dMM                      Battery: {battery_percentage}
-    NMm  dMM  -MMm  'MMM'  dMM. dMM
-    NMm  dMM  .mmd  `mmm   yMM. dMM    
+    NMm  dMM  -MMm  'MMM'  dMM. dMN                      GPU: {gpu}                    
+    NMm  dMM  .mmd  `mmm   yMM. dMM    			 Memory: {memory}
     NMm  dMM`  mmd   mmm   ydm. dMM   
     hMM- +MMd/-------...-:sdds  dMM   
     -NMm- :hNMNNNmdddddddddy/`  dMM   
@@ -142,6 +144,8 @@ print(TEMPLATE.format(hostname = host_name(),
 	cpu=cpu_spec(),
 	local_ip=local_ip(),
 	battery_percentage=battery_percentage(),
+	gpu=gpu_spec(),
+	memory = memory(),
 )
 )
 os.system("rm -rf .tmp.txt")
