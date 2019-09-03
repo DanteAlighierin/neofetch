@@ -2,18 +2,16 @@
 
 import socket
 import os
-
+import subprocess
 
 def local_ip():
 	try:
-		try:
-			s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-			s.connect(("8.8.8.8", 80))
-			return s.getsockname()[0]
-		except:
-			return None
+		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		s.connect(("8.8.8.8", 80))
+		return s.getsockname()[0]
 	except:
 		return None
+
 
 
 def host_name():
@@ -25,11 +23,8 @@ def host_name():
 def os_version():
 	
 	try:
-		os.system("/usr/sbin/system_profiler SPSoftwareDataType | grep 'System Version' > .tmp.txt")
+		return os.uname()
 
-		with open(".tmp.txt", "r") as f:
-			for info in f:
-				return info.strip()[16:30]
 	except:
 		return None
 
@@ -53,7 +48,7 @@ def screen_size():
 	except:
 		return None
 
-def uptime():
+"""def uptime():
 	try:
 		os.system("uptime | grep 'Time since boot:' > .tmp.txt")
 
@@ -61,22 +56,33 @@ def uptime():
 			for info in f:
 				return info.strip()[17:]
 	except:
+		return None"""
+
+
+def uptime():
+	try:
+		proc = subprocess.Popen("uptime")
+		out = proc.stdout.readlines()
+
+		with open(".tmp.txt", "r") as f:
+			for info in f:
+				return info.strip()[17:]
+
+	except:
 		return None
 
 def shell():
 	try:
-		return os.environ.get('SHELL', '')
+		return os.environ.get('SHELL', 'bashd')
 	except:
 		return None
 
 def kernel():
-	try:
-		os.system("uname -a > .tmp.txt")
-		with open(".tmp.txt", "r") as f:
-			for info in f:
-				return info.strip()[61:67]
-	except:
-		return None
+    os.system("uname -a  > .tmp.txt")
+
+    with open(".tmp.txt", "r") as f:
+        for info in f:
+            return info.strip()[61:67]
 
 
 def battery_percentage():
@@ -114,28 +120,37 @@ def SSID():
 	except:
 		return None
 
-
 TEMPLATE = """
-\033[92m                    'c.           {hostname} \033[0m
-\033[92m                 ,xNMM.\033[0m           {hostname_sep}
-\033[92m               .OMMMMo\033[0m\033[93m            OS\033[0m: {os_version}
-\033[92m               OMMM0,\033[0m\033[93m             Kernel\033[0m: {kernel}
-\033[92m     .;loddo:' loolloddol;.\033[0m\033[93m       Model\033[0m: {model}
-\033[92m   cKMMMMMMMMMMNWMMMMMMMMMM0:\033[0m\033[93m     Shell\033[0m: {shell}
-\033[93m .KMMMMMMMMMMMMMMMMMMMMMMMWd.\033[0m\033[93m     Uptime\033[0m: {uptime}
-\033[93m XMMMMMMMMMMMMMMMMMMMMMMMX.\033[0m\033[93m       Resolution\033[0m: {size}
-\033[91m;MMMMMMMMMMMMMMMMMMMMMMMM:\033[0m\033[93m        CPU\033[0m: {cpu}
-\033[91m:MMMMMMMMMMMMMMMMMMMMMMMM:\033[0m\033[93m        Local IP\033[0m: {local_ip}
-\033[91m.MMMMMMMMMMMMMMMMMMMMMMMMX.\033[0m\033[93m       Battery\033[0m: {battery_percentage}
-\033[91m kMMMMMMMMMMMMMMMMMMMMMMMMWd.\033[0m\033[93m     SSID\033[0m: {ssid}
-\033[95m .XMMMMMMMMMMMMMMMMMMMMMMMMMMk\033[0m
-\033[95m  .XMMMMMMMMMMMMMMMMMMMMMMMMK.\033[0m
-\033[94m    kMMMMMMMMMMMMMMMMMMMMMMd\033[0m
-\033[94m     ;KMMMMMMMWXXWMMMMMMMk.\033[0m
-\033[94m       .cooc,.    .,coo:.\033[0m
-
-   
+                                     {hostname} 
+                                            {hostname_sep}
+                                                         OS: {os_version}
+  MMMMMMMMMMMMMMMMMMMMMMMMMmds+.                         Kernel: {kernel}
+MMm----::-://////////////oymNMd+`                        Model: {model}
+MMd      /++                -sNMd:                       Shell: {shell}
+MMNso/`  dMM    `.::-. .-::.` .hMN:                      Uptime: {uptime}
+ddddMMh  dMM   :hNMNMNhNMNMNh: `NMm                      Resolution: {size}
+    NMm  dMM  .NMN/-+MMM+-/NMN` dMM                      CPU: {cpu}
+    NMm  dMM  -MMm  `MMM   dMM. dMM                      Local IP: {local_ip}
+    NMm  dMM  -MMm  `MMM   dMM. dMM                      Battery: {battery_percentage}
+    NMm  dMM  -MMm  'MMM'  dMM. dMM
+    NMm  dMM  .mmd  `mmm   yMM. dMM    
+    NMm  dMM`  mmd   mmm   ydm. dMM   
+    hMM- +MMd/-------...-:sdds  dMM   
+    -NMm- :hNMNNNmdddddddddy/`  dMM   
+     -dMNs-``-::::-------.``    dMM   
+      `/dMNmy+/:-------------:/yMMM   
+         ./ydNMMMMMMMMMMMMMMMMMMMMM  
+            .MMMMMMMMMMMMMMMMMMM                                                         
+                                                        
+                                                         
+                                                         
+                                                         
+                                                         
+                                                        
+                                                         
 """
+
+
 print(TEMPLATE.format(hostname = host_name(),
 	hostname_sep = "-" * len(host_name()),
 	os_version=os_version(),
@@ -150,3 +165,5 @@ print(TEMPLATE.format(hostname = host_name(),
 	ssid=SSID()))
 
 os.system("rm -rf .tmp.txt")
+
+
