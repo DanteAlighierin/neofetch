@@ -92,12 +92,13 @@ def battery_percentage():
 
 
 
-def SSID():
+"""def SSID():
 	try:
-		return None
+		
+
 
 	except:
-		return None
+		return None"""
 
 TEMPLATE = """
                                      {hostname} 
@@ -141,8 +142,8 @@ print(TEMPLATE.format(hostname = host_name(),
 	cpu=cpu_spec(),
 	local_ip=local_ip(),
 	battery_percentage=battery_percentage(),
-	ssid=SSID()))
-
+)
+)
 os.system("rm -rf .tmp.txt")
 
 
