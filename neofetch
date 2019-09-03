@@ -61,13 +61,7 @@ def screen_size():
 
 def uptime():
 	try:
-		proc = subprocess.Popen("uptime")
-		out = proc.stdout.readlines()
-
-		with open(".tmp.txt", "r") as f:
-			for info in f:
-				return info.strip()[17:]
-
+		os.uptime()
 	except:
 		return None
 
@@ -98,12 +92,11 @@ def battery_percentage():
 def cpu_spec():
 	try:
 		
-		os.getpid()
+		return os.getpid()
+
+
 	
-		with open(".tmp.txt", "r") as f:
-			for info in f:
-				cpu = info.strip().replace("CPU", "")
-				return cpu.replace("  ", " ")
+
 
 	except:
 		return None
