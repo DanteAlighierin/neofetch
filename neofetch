@@ -1,8 +1,10 @@
 #!/usr/local/bin/python3
-
+import time
 import socket
 import os
 import subprocess
+import sys
+import platform
 
 def local_ip():
 	try:
@@ -23,28 +25,22 @@ def host_name():
 def os_version():
 	
 	try:
-		return os.uname()
+		return platform.linux_distribution(distname='', version='', id='', supported_dists=('SuSE', 'debian', 'redhat', 'mandrake', ...), full_distribution_name=1)
 
 	except:
 		return None
 
 def model():
 	try:
-		os.system("/usr/sbin/system_profiler SPHardwareDataType | grep 'Model Identifier' > .tmp.txt")
-
-		with open(".tmp.txt", "r") as f:
-			for info in f:
-				return info.strip()[18:]
+		return None
 	except:
 		return None
 
 def screen_size():
 	try:
-		os.system("/usr/sbin/system_profiler SPDisplaysDataType |grep Resolution > .tmp.txt")
+		return os.platform()
 
-		with open(".tmp.txt", "r") as f:
-			for info in f:
-				return info.strip()[12:]
+		
 	except:
 		return None
 
@@ -61,54 +57,44 @@ def screen_size():
 
 def uptime():
 	try:
-		os.uptime()
+		return None
 	except:
 		return None
 
 def shell():
 	try:
-		return os.environ.get('SHELL', 'bashd')
+		return os.environ.get('SHELL', '')
 	except:
 		return None
 
 def kernel():
-    os.system("uname -a  > .tmp.txt")
-
-    with open(".tmp.txt", "r") as f:
-        for info in f:
-            return info.strip()[61:67]
-
-
-def battery_percentage():
 	try:
-		os.system('pmset -g batt | grep -Eo "\d+%" > .tmp.txt')
-
-		with open(".tmp.txt", "r") as f:
-			for info in f:
-				return info.strip()
+		return platform.release()
 	except:
 		return None
 
 def cpu_spec():
 	try:
-		
-		return os.getpid()
+		return platform.processor()
+	except:
+		return None
+
+def battery_percentage():
+	try:
+		return None
+	except:
+		return None
+
 
 
 	
 
 
-	except:
-		return None
 
 
 def SSID():
 	try:
-		os.system("/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | awk '/ SSID/ {print substr($0, index($0, $2))}' > .tmp.txt")
-
-		with open(".tmp.txt", "r") as f:
-			for info in f:
-				return info.strip()
+		return None
 
 	except:
 		return None
