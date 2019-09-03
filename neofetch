@@ -44,15 +44,7 @@ def screen_size():
 	except:
 		return None
 
-"""def uptime():
-	try:
-		os.system("uptime | grep 'Time since boot:' > .tmp.txt")
 
-		with open(".tmp.txt", "r") as f:
-			for info in f:
-				return info.strip()[17:]
-	except:
-		return None"""
 
 
 def uptime():
