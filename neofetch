@@ -5,7 +5,8 @@ import os
 import subprocess
 import sys
 import platform
-
+import sysconfig
+import psutil
 def local_ip():
 	try:
 		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -32,7 +33,7 @@ def os_version():
 
 def model():
 	try:
-		return None
+		return str("PC on x_86 architecture")
 	except:
 		return None
 
@@ -49,7 +50,7 @@ def screen_size():
 
 def uptime():
 	try:
-		return None
+		return (subprocess.check_output(['cat', '/proc/uptime']).decode('utf-8').split()[0])
 	except:
 		return None
 
@@ -71,6 +72,14 @@ def cpu_spec():
 	except:
 		return None
 
+def cpu_usage():
+	try:
+		
+		return int(psutil.cpu_percent() + "%")
+
+	except :
+		return None
+
 def battery_percentage():
 	try:
 		return None
@@ -78,13 +87,17 @@ def battery_percentage():
 		return None
 
 def gpu_spec():
-	pass
-
+	return None
 def memory():
 	pass
+def memory_usage():
+	try:
+		return psutil.LINUX()
+	except:
+		return None
 
-
-
+"""def gpu_usage():
+	pass"""
 
 """def SSID():
 	try:
@@ -108,8 +121,8 @@ ddddMMh  dMM   :hNMNMNhNMNMNh: `NMm                      Resolution: {size}
     NMm  dMM  -MMm  `MMM   dMM. dMM                      Battery: {battery_percentage}
     NMm  dMM  -MMm  'MMM'  dMM. dMN                      GPU: {gpu}                    
     NMm  dMM  .mmd  `mmm   yMM. dMM    			 Memory: {memory}
-    NMm  dMM`  mmd   mmm   ydm. dMM   
-    hMM- +MMd/-------...-:sdds  dMM   
+    NMm  dMM`  mmd   mmm   ydm. dMM              CPU_usage:{cpu_usage}
+    hMM- +MMd/-------...-:sdds  dMM              Memory_Usage:{memory_usage}
     -NMm- :hNMNNNmdddddddddy/`  dMM   
      -dMNs-``-::::-------.``    dMM   
       `/dMNmy+/:-------------:/yMMM   
@@ -134,10 +147,12 @@ print(TEMPLATE.format(hostname = host_name(),
 	uptime=uptime(),
 	size=screen_size(),
 	cpu=cpu_spec(),
+	cpu_usage=cpu_usage(),
 	local_ip=local_ip(),
 	battery_percentage=battery_percentage(),
 	gpu=gpu_spec(),
 	memory = memory(),
+	memory_usage = memory_usage()
 )
 )
 os.system("rm -rf .tmp.txt")
