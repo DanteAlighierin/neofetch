@@ -1,12 +1,12 @@
 #!/usr/local/bin/python3
-import time
+
 import socket
 import os
 import subprocess
-import sys
+
 import platform
-import sysconfig
-import psutil
+
+
 
 def local_ip():
 	try:
