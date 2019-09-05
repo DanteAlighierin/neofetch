@@ -34,7 +34,7 @@ def os_version():
 
 def model():
 	try:
-		return str("PC on x_86 architecture")
+		return str("PC on x_86 architecture.Desktop computer")
 	except:
 		return None
 
@@ -69,7 +69,7 @@ def kernel():
 
 def cpu_spec():
 	try:
-		return subprocess.check_output(["inxi -c"])
+		return os.system("sudo lshw -class cpu")
 	except:
 		return None
 
@@ -83,20 +83,16 @@ def cpu_usage():
 
 def battery_percentage():
 	try:
-		return subprocess.check_output([""])
+		return os.system("upower -i /org/freedesktop/UPower/devices/battery_BAT0")
 
 	except:
 		return None
 
-def gpu_spec():
-	try:
-		return subprocess.check_output(["uptime"])
-	except:
-		return None
+
 
 def memory():
 	try:
-		return subprocess.check_output(["sudo inxi -m"])
+		return os.system("sudo inxi -m")
 	except:
 		return None
 
@@ -114,11 +110,11 @@ Model: {model}
 Shell: {shell}
 Uptime: {uptime}
 Resolution: {size}
-CPU: {cpu}
 Local IP: {local_ip}
 Battery: {battery_percentage}
-GPU: {gpu}                    
-Memory: {memory}
+Cpu_usage:{cpu_usage}
+                   
+
 
 
 
@@ -146,7 +142,6 @@ print(TEMPLATE.format(hostname = host_name(),
 	cpu_usage=cpu_usage(),
 	local_ip=local_ip(),
 	battery_percentage=battery_percentage(),
-	gpu=gpu_spec(),
 	memory = memory(),
 )
 )
