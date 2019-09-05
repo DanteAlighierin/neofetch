@@ -7,6 +7,7 @@ import sys
 import platform
 import sysconfig
 import psutil
+
 def local_ip():
 	try:
 		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -39,7 +40,7 @@ def model():
 
 def screen_size():
 	try:
-		return os.platform()
+		return subprocess.check_output(["uptime"])
 
 		
 	except:
@@ -50,7 +51,7 @@ def screen_size():
 
 def uptime():
 	try:
-		return (subprocess.check_output(['cat', '/proc/uptime']).decode('utf-8').split()[0])
+		return subprocess.check_output(["uptime"])
 	except:
 		return None
 
@@ -68,73 +69,68 @@ def kernel():
 
 def cpu_spec():
 	try:
-		return platform.processor()
+		return subprocess.check_output(["inxi -c"])
 	except:
 		return None
 
 def cpu_usage():
 	try:
 		
-		return int(psutil.cpu_percent() + "%")
+		return psutil.cpu_percent()
 
 	except :
 		return None
 
 def battery_percentage():
 	try:
-		return None
+		return subprocess.check_output([""])
+
 	except:
 		return None
 
 def gpu_spec():
-	return None
-def memory():
-	pass
-def memory_usage():
 	try:
-		return psutil.LINUX()
+		return subprocess.check_output(["uptime"])
 	except:
 		return None
 
-"""def gpu_usage():
-	pass"""
-
-"""def SSID():
+def memory():
 	try:
-		
-
-
+		return subprocess.check_output(["sudo inxi -m"])
 	except:
-		return None"""
+		return None
+
+
+
+
 
 TEMPLATE = """
                                      {hostname} 
-                                            {hostname_sep}
-                                                         OS: {os_version}
-  MMMMMMMMMMMMMMMMMMMMMMMMMmds+.                         Kernel: {kernel}
-MMm----::-://////////////oymNMd+`                        Model: {model}
-MMd      /++                -sNMd:                       Shell: {shell}
-MMNso/`  dMM    `.::-. .-::.` .hMN:                      Uptime: {uptime}
-ddddMMh  dMM   :hNMNMNhNMNMNh: `NMm                      Resolution: {size}
-    NMm  dMM  .NMN/-+MMM+-/NMN` dMM                      CPU: {cpu}
-    NMm  dMM  -MMm  `MMM   dMM. dMM                      Local IP: {local_ip}
-    NMm  dMM  -MMm  `MMM   dMM. dMM                      Battery: {battery_percentage}
-    NMm  dMM  -MMm  'MMM'  dMM. dMN                      GPU: {gpu}                    
-    NMm  dMM  .mmd  `mmm   yMM. dMM    			 Memory: {memory}
-    NMm  dMM`  mmd   mmm   ydm. dMM              CPU_usage:{cpu_usage}
-    hMM- +MMd/-------...-:sdds  dMM              Memory_Usage:{memory_usage}
-    -NMm- :hNMNNNmdddddddddy/`  dMM   
-     -dMNs-``-::::-------.``    dMM   
-      `/dMNmy+/:-------------:/yMMM   
-         ./ydNMMMMMMMMMMMMMMMMMMMMM  
-            .MMMMMMMMMMMMMMMMMMM                                                         
+                                               {hostname_sep}
+         
+OS: {os_version}
+Kernel: {kernel}
+Model: {model}
+Shell: {shell}
+Uptime: {uptime}
+Resolution: {size}
+CPU: {cpu}
+Local IP: {local_ip}
+Battery: {battery_percentage}
+GPU: {gpu}                    
+Memory: {memory}
+
+
+
+
+                                                     
                                                         
                                                          
                                                          
                                                          
                                                          
                                                         
-                                                         
+                                                 
 """
 
 
@@ -152,7 +148,6 @@ print(TEMPLATE.format(hostname = host_name(),
 	battery_percentage=battery_percentage(),
 	gpu=gpu_spec(),
 	memory = memory(),
-	memory_usage = memory_usage()
 )
 )
 os.system("rm -rf .tmp.txt")
