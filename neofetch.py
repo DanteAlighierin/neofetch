@@ -69,7 +69,7 @@ def kernel():
 
 def cpu_spec():
 	try:
-		return os.system("sudo lshw -class cpu")
+		#return os.system("sudo lshw -class cpu")
 	except:
 		return None
 
