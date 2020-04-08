@@ -67,19 +67,19 @@ def kernel():
 	except:
 		return None
 
-def cpu_spec():
-	try:
-		return os.system("sudo inxi -m")
-	except:
-		return None
+#def cpu_spec():
+#	try:
+#		return os.system("sudo inxi -m")
+#	except:
+#		return None
 
-def cpu_usage():
-	try:
-		
+#def cpu_usage():
+#	try:
+#		
 		return psutil.cpu_percent()
 
-	except :
-		return None
+#	except :
+#		return None
 
 def battery_percentage():
 	try:
@@ -101,31 +101,26 @@ def memory():
 
 
 TEMPLATE = """
-                                     {hostname} 
-                                               {hostname_sep}
+                           {hostname} 
+                           {hostname_sep}
          
-OS: {os_version}
-Kernel: {kernel}
-Shell: {shell}
-Uptime: {uptime}
-Resolution: {size}
-Local IP: {local_ip}
-Battery: {battery_percentage}
-Cpu_usage:{cpu_usage}
-                   
-
-
-
-
-
-                                                     
-                                                        
-                                                         
-                                                         
-                                                         
-                                                         
-                                                        
-                                                 
+       a88888.             OS: {os_version}
+      d888888b.            Kernel: {kernel}
+      8P"YP"Y88            Shell: {shell}
+      8|o||o|88            Uptime: {uptime}
+      8'    .88            Resolution: {size}
+      8`._.' Y8            Local IP: {local_ip}
+     d/      `8b.             
+   .dP   .     Y8b.
+   d8:'   "   `::88b.
+  d8"           `Y88b
+ :8P     '       :888
+  8a.    :      _a88
+  ._/"Yaa_ :    .| 88P|                                                
+  \    YP"      `| 8P  `.
+  /     \._____.d|    .'
+  `--..__)888888P`._.'
+                                                                                                         
 """
 
 
@@ -136,11 +131,7 @@ print(TEMPLATE.format(hostname = host_name(),
 	shell=shell(),
 	uptime=uptime(),
 	size=screen_size(),
-	cpu=cpu_spec(),
-	cpu_usage=cpu_usage(),
-	local_ip=local_ip(),
-	battery_percentage=battery_percentage(),
-	memory = memory(),
+	local_ip=local_ip()
 )
 )
 os.system("rm -rf .tmp.txt")
