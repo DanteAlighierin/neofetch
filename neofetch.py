@@ -40,7 +40,7 @@ def model():
 
 def screen_size():
 	try:
-		return subprocess.check_output(["uptime"])
+		return subprocess.check_output(["xrandr | grep \"*\""], shell=True)
 
 		
 	except:
@@ -69,7 +69,7 @@ def kernel():
 
 def cpu_spec():
 	try:
-		#return os.system("sudo lshw -class cpu")
+		return os.system("sudo inxi -m")
 	except:
 		return None
 
@@ -106,7 +106,6 @@ TEMPLATE = """
          
 OS: {os_version}
 Kernel: {kernel}
-Model: {model}
 Shell: {shell}
 Uptime: {uptime}
 Resolution: {size}
@@ -134,7 +133,6 @@ print(TEMPLATE.format(hostname = host_name(),
 	hostname_sep = "-" * len(host_name()),
 	os_version=os_version(),
 	kernel=kernel(),
-	model=model(),
 	shell=shell(),
 	uptime=uptime(),
 	size=screen_size(),
