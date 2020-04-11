@@ -51,7 +51,7 @@ def screen_size():
 
 def uptime():
 	try:
-		return subprocess.check_output(["uptime"])
+		return subprocess.check_output(["uptime -p"])
 	except:
 		return None
 
@@ -67,11 +67,11 @@ def kernel():
 	except:
 		return None
 
-#def cpu_spec():
-#	try:
-#		return os.system("sudo inxi -m")
-#	except:
-#		return None
+def cpu_spec():
+	try:
+		return os.system("inxi -C")
+	except:
+		return None
 
 #def cpu_usage():
 #	try:
@@ -106,6 +106,7 @@ TEMPLATE = """
          
        a88888.             OS: {os_version}
       d888888b.            Kernel: {kernel}
+      d888888b.            Cpu: {cpu}
       8P"YP"Y88            Shell: {shell}
       8|o||o|88            Uptime: {uptime}
       8'    .88            Resolution: {size}
@@ -128,12 +129,13 @@ print(TEMPLATE.format(hostname = host_name(),
 	hostname_sep = "-" * len(host_name()),
 	os_version=os_version(),
 	kernel=kernel(),
+        cpu=cpu_spec(),
 	shell=shell(),
 	uptime=uptime(),
 	size=screen_size(),
 	local_ip=local_ip()
 )
 )
-os.system("rm -rf .tmp.txt")
+os.system("rm -rf .tmp.txt")#temporary file
 
 
