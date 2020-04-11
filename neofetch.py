@@ -51,7 +51,7 @@ def screen_size():
 
 def uptime():
 	try:
-		return subprocess.check_output(["uptime -p"])
+		return subprocess.check_output(["uptime -p"], shell=True)
 	except:
 		return None
 
@@ -69,7 +69,7 @@ def kernel():
 
 def cpu_spec():
 	try:
-		return os.system("inxi -C")
+		return platform.processor()
 	except:
 		return None
 
@@ -106,7 +106,7 @@ TEMPLATE = """
          
        a88888.             OS: {os_version}
       d888888b.            Kernel: {kernel}
-      d888888b.            Cpu: {cpu}
+      d888888b.            Cpu Architecture: {cpu}
       8P"YP"Y88            Shell: {shell}
       8|o||o|88            Uptime: {uptime}
       8'    .88            Resolution: {size}
