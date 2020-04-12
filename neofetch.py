@@ -99,7 +99,7 @@ def memory():
 
 def de():
     try:
-        return os.system("echo $DESKTOP_SESSION")
+        return os.environ.get('DESKTOP_SESSION')
     except:
         return None
 
@@ -113,10 +113,11 @@ TEMPLATE = """
 \033[92m      8P"YP"Y88     \033[0m\033[93m  Kernel:{kernel}
 \033[93m      8|o||o|88     \033[0m\033[93m  Cpu architecture: {cpu}
 \033[93m      8'    .88     \033[0m\033[93m  Shell: {shell}
+\033[93m      8'    .88     \033[0m\033[93m  DE(WM): {de}                                
 \033[93m      8`._.' Y8      \033[0m\033[93m Uptime: {uptime}  
 \033[93m     d/      `8b.   \033[0m\033[93m  Resolution: {size}         
 \033[91m   .dP   .     Y8b. \033[0m\033[93m  Local IP: {local_ip}
-\033[91m   d8:'   "   `::88b. DE: {de}
+\033[91m   d8:'   "   `::88b. 
 \033[91m  d8"           `Y88b
 \033[95m :8P     '       :888
 \033[95m  8a.    :      _a88
