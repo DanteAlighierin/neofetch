@@ -83,7 +83,7 @@ def cpu_spec():
 
 def battery_percentage():
 	try:
-		return os.system("upower -i /org/freedesktop/UPower/devices/battery_BAT0")
+		return subprocess.check_output("upower -i /org/freedesktop/UPower/devices/battery_BAT0")
 
 	except:
 		return None
@@ -99,7 +99,7 @@ def memory():
 
 def de():
     try:
-        return subprocess.check_output("echo $DESKTOP_SESSION")
+        return os.system("echo $DESKTOP_SESSION")
     except:
         return None
 
@@ -116,7 +116,7 @@ TEMPLATE = """
 \033[93m      8`._.' Y8      \033[0m\033[93m Uptime: {uptime}  
 \033[93m     d/      `8b.   \033[0m\033[93m  Resolution: {size}         
 \033[91m   .dP   .     Y8b. \033[0m\033[93m  Local IP: {local_ip}
-\033[91m   d8:'   "   `::88b.
+\033[91m   d8:'   "   `::88b. DE: {de}
 \033[91m  d8"           `Y88b
 \033[95m :8P     '       :888
 \033[95m  8a.    :      _a88
@@ -136,6 +136,7 @@ print(TEMPLATE.format(hostname = host_name(),
 	kernel=kernel(),
         cpu=cpu_spec(),
 	shell=shell(),
+        de=de(),
 	uptime=uptime(),
 	size=screen_size(),
 	local_ip=local_ip()
