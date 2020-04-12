@@ -97,7 +97,11 @@ def memory():
 		return None
 
 
-
+def de():
+    try:
+        return subprocess.check_output("echo $DESKTOP_SESSION")
+    except:
+        return None
 
 
 TEMPLATE = """
