@@ -1,5 +1,5 @@
 # neofetch
-Yes< this is fork. This is the fork of MacOs' version of neofetch. I've ported to my linux desktop.
+Yes, this is fork. This is the fork of MacOs' version of neofetch. I've ported to my linux desktop.
 
 ## Installation
 ```bash
