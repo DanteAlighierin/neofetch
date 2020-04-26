@@ -40,7 +40,7 @@ def model():
 
 def screen_size():
 	try:
-		return subprocess.check_output(["xrandr | grep \"*\""], shell=True)
+		return subprocess.check_output(["xrandr | grep \"*\""], shell=True).decode('utf-8')
 
 		
 	except:
@@ -51,7 +51,7 @@ def screen_size():
 
 def uptime():
 	try:
-		return subprocess.check_output(["uptime -p"], shell=True)
+		return subprocess.check_output(["uptime -p"], shell=True).decode('utf-8')
 	except:
 		return None
 
